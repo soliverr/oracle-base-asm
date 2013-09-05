@@ -1,0 +1,13 @@
+Source: oracle-base-asm
+Section: rdbms
+Priority: required
+Maintainer: Kryazhevskikh Sergey, <soliverr@gmail.com>
+
+Package: oracle-base-asm
+Architecture: all
+Depends: oracle-base
+Description: Directories layout for Oracle ASM.
+ This package provides directories layout and system groups 
+ for Oracle ASM.
+ .
+

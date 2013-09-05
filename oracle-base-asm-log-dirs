@@ -1,0 +1,102 @@
+#! /bin/bash
+#
+#  Make log dirs for Oracle ASM and move logs from $ORACLE_HOME
+#
+#  Usage:
+#    oracle-base-asm-make-log [-d] [-s]
+
+ORACLE_ASM_LOG_BASE=${ORACLE_ASM_LOG_BASE:-/var/log/oracle/asm}
+ORACLE_ASM_LOG_DIRS='cfgtoollogs cfgtoollogs/oc4j crs css demo diag evm evm/admin install ldap ldap/admin network network/trace j2ee opmn racg rdbms rdbms/audit sheduler srvm'
+
+usage() {
+      cat << __EOFF__
+
+$0:
+    -d     -- Create log dirs in $ORACLE_ASM_LOG_BASE
+    -s     -- Create symbolic links in $ORACLE_HOME to created log dirs
+__EOFF__
+}
+
+exit_error() {
+    echo $1
+    exit 1
+}
+
+make_log_dirs() {
+    local d dst
+
+    if [ -n "$ORACLE_ASM_LOG_BASE_BUILD_DST" ] ; then
+        dst="$ORACLE_ASM_LOG_BASE_BUILD_DST/$ORACLE_ASM_LOG_BASE"
+    else 
+        dst="$ORACLE_ASM_LOG_BASE"
+    fi
+    [ -d "$dst" ] || (mkdir -p "$dst" || exit_error "Can't create $dst")
+
+    for d in $ORACLE_ASM_LOG_DIRS ; do
+        [ -d "$dst/$d" ] || (mkdir -p "$dst/$d" || exit_error "Can't create $dst/$d")
+    done
+}
+
+make_sym_links() {
+    local d src tgt dst
+
+    for d in $ORACLE_ASM_LOG_DIRS ; do
+        tgt=$ORACLE_ASM_LOG_BASE/$d
+        [ -n "$ORACLE_ASM_LOG_BASE_BUILD_DST" ] && dst="$ORACLE_ASM_LOG_BASE_BUILD_DST/$tgt" || dst="$tgt"
+
+        [ -d $tgt ] || continue
+
+        case $d in 
+            cfgtoollogs) src=$ORACLE_HOME/cfgtoollogs ;;
+            cfgtoollogs/oc4j) src=$ORACLE_HOME/oc4j/cfgtoollogs ;;
+            crs) src=$ORACLE_HOME/crs/log ;;
+            css) src=$ORACLE_HOME/css/log ;;
+            demo) src=$ORACLE_HOME/demo/schema/log ;;
+            evm) src=$ORACLE_HOME/evm/log ;;
+            evm/admin) src=$ORACLE_HOME/evm/admin/log ;;
+            ldap) src=$ORACLE_HOME/ldap/log ;;
+            ldap/admin) src=$ORACLE_HOME/ldap/admin/LOGS ;;
+            network) src=$ORACLE_HOME/network/log ;;
+            j2ee) src=$ORACLE_HOME/oc4j/j2ee/home/log ;;
+            opmn) src=$ORACLE_HOME/opmn/logs ;;
+            network/trace) src=$ORACLE_HOME/network/trace ;;
+            racg) src=$ORACLE_HOME/racg/log ;;
+            rdbms) src=$ORACLE_HOME/rdbms/log ;;
+            rdbms/audit) src=$ORACLE_HOME/rdbms/audit ;;
+            sheduler) src=$ORACLE_HOME/sheduler/log ;;
+            srvm) src=$ORACLE_HOME/srvm/log ;;
+            * ) continue ;;
+
+        esac
+
+        [ -d $src ] || continue
+        mv $src/* $dst 2>&-
+        rmdir $src || exit_error "Can't delete $src"
+        ln -s -f $tgt $src || exit_error "Can't create symbolic link $src on $tgt"
+    done
+
+    # Log dirs created in runtime
+    for d in log install ; do
+        case "$d" in 
+            log ) src=$ORACLE_HOME/log ; tgt=$ORACLE_ASM_LOG_BASE ;;
+            install ) src=$ORACLE_HOME/install/checkpoints; tgt=$ORACLE_ASM_LOG_BASE/install ;;
+            * ) continue ;;
+        esac
+        [ -n "$ORACLE_ASM_LOG_BASE_BUILD_DST" ] && dst="$ORACLE_ASM_LOG_BASE_BUILD_DST/$tgt" || dst="$tgt"
+        mv $src/* $dst 2>&-
+        rmdir $src 2>&-
+        ln -s -f $tgt $src || exit_error "Can't create symbolic link $src on $tgt"
+    done
+}
+
+[ $# -lt 1 ] && (usage; exit 0)
+
+for i in $@ ; do
+    case $i in
+      -d ) make_log_dirs ;;
+      -s ) make_log_dirs && make_sym_links ;;
+      * ) continue ;;
+    esac
+done
+
+exit 0

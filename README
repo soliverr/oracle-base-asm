@@ -1,0 +1,20 @@
+oracle-base-asm
+---------------
+
+Common directories, users and groups to maintain Oracle ASM.
+
+Directories destination:
+
+ - /var/log/oracle/asm - directory to keep logfiles for Oracle ASM
+
+UNIXs' groups:
+
+ - asmdba     - group that has 'AS SYSDBA' privilege
+ - asmoper    - group that has 'AS SYSOPER' privilege (it can start/stop ASM instance)
+ - asmadm     - group that has 'AS SYSADM' privilege
+
+UNIXs' users:
+
+ User `oracle' from oracle-base package is added to all groups above.
+
+ -- Sergey Kryazhevskikh <soliverr@gmail.com>
