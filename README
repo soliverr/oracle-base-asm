@@ -5,7 +5,7 @@ Common directories, users and groups to maintain Oracle ASM.
 
 Directories destination:
 
- - /var/log/oracle/asm - directory to keep logfiles for Oracle ASM
+ - /var/log/oracle/asm - directory layouts to keep logfiles for Oracle ASM
 
 UNIXs' groups:
 

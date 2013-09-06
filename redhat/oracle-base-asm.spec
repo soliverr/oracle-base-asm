@@ -97,13 +97,13 @@ postrm "redhat" "$action"
 
 %changelog
 * Wed Apr 18 2012 Kryazhevskikh Sergey <soliverr@gmail.com> - 1.0-5  11:18:09 +0600
-- Added diag, rdbms/audit directories
+- Added `diag', `rdbms/audit' directories
 
 * Tue Apr 10 2012 Kryazhevskikh Sergey <soliverr@gmail.com> - 1.0-4  11:32:52 +0600
 - Added new directories
 
 * Wed Apr 04 2012 Kryazhevskikh Sergey <soliverr@gmail.com> - 1.0-3  12:15:18 +0600
-- Added ORACLE_HOME/install/checkpoints symlink
+- Added `ORACLE_HOME/install/checkpoints' symlink
 
 * Tue Apr 03 2012 Kryazhevskikh Sergey <soliverr@gmail.com> - 1.0-2  16:48:48 +0600
 - Changed files and directories permissions

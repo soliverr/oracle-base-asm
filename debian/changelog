@@ -1,6 +1,6 @@
 oracle-base-asm (1.0-5) stable; urgency=low
 
-  * Added diag, rdbms/audit directories
+  * Added `diag', `rdbms/audit' directories
 
  -- Kryazhevskikh Sergey <soliverr@gmail.com>  Wed, 18 Apr 2012 11:18:09 +0600
 
@@ -12,7 +12,7 @@ oracle-base-asm (1.0-4) stable; urgency=low
 
 oracle-base-asm (1.0-3) stable; urgency=low
 
-  * Added ORACLE_HOME/install/checkpoints symlink
+  * Added `ORACLE_HOME/install/checkpoints' symlink
 
  -- Kryazhevskikh Sergey <soliverr@gmail.com>  Wed, 04 Apr 2012 12:15:18 +0600
 
