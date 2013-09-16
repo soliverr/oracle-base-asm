@@ -1,7 +1,8 @@
 Source: oracle-base-asm
-Section: rdbms
+Section: database
 Priority: required
 Maintainer: Kryazhevskikh Sergey, <soliverr@gmail.com>
+Build-Depends: debhelper (>= 5)
 
 Package: oracle-base-asm
 Architecture: all

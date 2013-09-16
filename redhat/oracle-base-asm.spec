@@ -4,7 +4,7 @@ Summary(ru_RU.UTF-8)   : Иерархия каталогов для ASM Oracle.
 Name      : oracle-base-asm
 Version   : 1.0
 Release   : 5
-Group     : RDBMS
+Group     : Database
 
 Packager  : Kryazhevskikh Sergey, <soliverr@gmail.com>
 License   : GPLv2
