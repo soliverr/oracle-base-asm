@@ -79,8 +79,8 @@ postinst "redhat" "$action"
 
 if [ $1 -eq 0 ] ; then
   action=purge
-  chmod -R 2755 /etc/oracle
-  chown -R oracle:oracle /etc/oracle
+  #chmod -R 2755 /etc/oracle
+  #chown -R oracle:oracle /etc/oracle
 else
   action=upgrade
 fi
